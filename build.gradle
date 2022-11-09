@@ -1,0 +1,45 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //mybatis 사용
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //swagger2 사용
+    //http://localhost:8080/swagger-ui.html
+    //Long 타입의 필수 파라미터에 example이 없는 경우 "" 공백이 Long 타입 파라미터에 들어가기 때문에 아래와 같이 NumberFormatException이 발생해서  annotation, models 1.5버전 추가
+    implementation (group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'){
+        exclude module: 'swagger-annotations' exclude module: 'swagger-models'
+    }
+    implementation "io.swagger:swagger-annotations:1.5.21"
+    implementation "io.swagger:swagger-models:1.5.21"
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+    //lombok 사용
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    //postgresql 사용
+    runtimeOnly 'org.postgresql:postgresql'
+
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
